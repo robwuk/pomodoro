@@ -1,0 +1,77 @@
+<!doctype HTML>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<html>
+<head>
+
+  <!-- meta tags needed to make mobile responsive -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- links to bootstrap and your css -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="FCC_Pomo.css">
+
+<script>
+
+ </script>
+  <title>Robert Worth - Pomodoro Clock</title>
+</head>
+
+  <body>
+    <script src="FCC_Test_Script.js"></script>
+
+    <div id="fcc_test_suite_wrapper" style="position: relative !important; z-index: 99999 !important;"></div>
+    <div id="screen">
+      <div id="pomodoro" class="container">
+        <div id="pomodoro__title" class="column">
+          <div id="title" class="col-md-12 title">Pomodoro Clock</div>
+          <div id="author" class="col-md-12 subtitle">developed by Robert Worth</div>
+        </div>
+        <div id="headings" class="columns">
+          <div class="col-md-6">
+            <div id="break-label" class="subtitle">Break Length</div>
+          </div>
+          <div class="col-md-6">
+            <div id="session-label" class="subtitle">Session Length</div>
+          </div>
+          <div class="col-md-2">
+            <div id="break-decrement" class="button" onclick="javascript:buttonPress('BREAKDECREASE')">-</div>
+          </div>
+          <div class="col-md-2">
+            <div id="break-length" class="duration">5</div>
+          </div>
+          <div class="col-md-2">
+            <div id="break-increment" class="button" onclick="javascript:buttonPress('BREAKINCREASE')">+</div>
+          </div>
+          <div class="col-md-2">
+            <div id="session-decrement" class="button" onclick="javascript:buttonPress('SESSIONDECREASE')">-</div>
+          </div>
+          <div class="col-md-2">
+            <div id="session-length" class="duration">25</div>
+          </div>
+          <div class="col-md-2">
+            <div id="session-increment" class="button" onclick="javascript:buttonPress('SESSIONINCREASE')">+</div>
+          </div>
+        </div>
+        <div id="pomodoro__clock" class="columns">
+          <div id="pomodoro__clock__face">
+            <div class="col-md-12">
+              <div id="timer-label" class="subtitle">Session Running</div>
+            </div>
+            <div class="col-md-12">
+              <div id="time-left" class="timer">0:00</div>
+            </div>
+            <div class="col-md-12">
+              <div id="start_stop" class="subtitle button" onclick="javascript:buttonPress('STARTSTOP')">Start/Stop</div>
+            </div>
+            <div class="col-md-12">
+              <div id="reset" class="subtitle button" onclick="javascript:buttonPress('RESET')">Reset</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="FCC_Pomo.js"></script>
+  </body>
+</html>

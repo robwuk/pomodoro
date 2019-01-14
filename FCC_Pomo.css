@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Satisfy');
+
+@font-face {
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  background-color: black;
+}
+#screen {
+  color: cyan;
+  text-align: center;
+}
+
+#pomodoro {
+  width: 30vw;
+}
+
+.button {
+
+}
+
+.button:hover{
+  cursor: pointer;
+}
+
+.title {
+  font-size: 300%;
+  font-weight: 400;
+}
+
+.subtitle {
+  font-size: 200%;
+  font-weight: 300;
+}
+
+#pomodoro__clock__face {
+  border-radius: 5px;
+  border: solid 4px cyan;
+}
