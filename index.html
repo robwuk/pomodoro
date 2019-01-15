@@ -24,11 +24,11 @@
     <div id="fcc_test_suite_wrapper" style="position: relative !important; z-index: 99999 !important;"></div>
     <div id="screen">
       <div id="pomodoro" class="container">
-        <div id="pomodoro__title" class="column">
+        <div id="pomodoro__title" class="row">
           <div id="title" class="col-md-12 title">Pomodoro Clock</div>
           <div id="author" class="col-md-12 subtitle">developed by Robert Worth</div>
         </div>
-        <div id="headings" class="columns">
+        <div id="pomodoro__controls" class="row">
           <div class="col-md-6">
             <div id="break-label" class="subtitle">Break Length</div>
           </div>
@@ -39,7 +39,7 @@
             <div id="break-decrement" class="button" onclick="javascript:buttonPress('BREAKDECREASE')">-</div>
           </div>
           <div class="col-md-2">
-            <div id="break-length" class="duration">5</div>
+            <div id="break-length" class="duration"></div>
           </div>
           <div class="col-md-2">
             <div id="break-increment" class="button" onclick="javascript:buttonPress('BREAKINCREASE')">+</div>
@@ -48,26 +48,24 @@
             <div id="session-decrement" class="button" onclick="javascript:buttonPress('SESSIONDECREASE')">-</div>
           </div>
           <div class="col-md-2">
-            <div id="session-length" class="duration">25</div>
+            <div id="session-length" class="duration"></div>
           </div>
           <div class="col-md-2">
             <div id="session-increment" class="button" onclick="javascript:buttonPress('SESSIONINCREASE')">+</div>
           </div>
         </div>
-        <div id="pomodoro__clock" class="columns">
-          <div id="pomodoro__clock__face">
-            <div class="col-md-12">
-              <div id="timer-label" class="subtitle">Session Running</div>
-            </div>
-            <div class="col-md-12">
-              <div id="time-left" class="timer">0:00</div>
-            </div>
-            <div class="col-md-12">
-              <div id="start_stop" class="subtitle button" onclick="javascript:buttonPress('STARTSTOP')">Start/Stop</div>
-            </div>
-            <div class="col-md-12">
-              <div id="reset" class="subtitle button" onclick="javascript:buttonPress('RESET')">Reset</div>
-            </div>
+        <div id="pomodoro__clock" class="row">
+          <div class="col-md-12">
+            <div id="timer-label" class="subtitle">Session Running</div>
+          </div>
+          <div class="col-md-12">
+            <div id="time-left" class="timer"></div>
+          </div>
+          <div class="col-md-12">
+            <div id="start_stop" class="subtitle button" onclick="javascript:buttonPress('STARTSTOP')">Start/Stop</div>
+          </div>
+          <div class="col-md-12">
+            <div id="reset" class="subtitle button" onclick="javascript:buttonPress('RESET')">Reset</div>
           </div>
         </div>
       </div>

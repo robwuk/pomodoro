@@ -6,8 +6,6 @@
 
 body{
   background-color: black;
-}
-#screen {
   color: cyan;
   text-align: center;
 }
@@ -34,7 +32,26 @@ body{
   font-weight: 300;
 }
 
-#pomodoro__clock__face {
-  border-radius: 5px;
+.duration{
+  font-size: 190%;
+}
+
+.timer{
+  font-size: 300%;
+}
+
+#pomodoro__controls .subtitle {
+  font-size: 150%;
+  font-weight: 300;
+}
+
+#pomodoro__clock {
+  margin-top: 2vh;
+  border-radius: 20px;
+  color: yellow;
   border: solid 4px cyan;
+}
+
+#pomodoro__controls{
+  margin-top: 2vh;
 }
