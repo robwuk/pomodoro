@@ -1,6 +1,5 @@
 var sessionLength;
 var breakLength;
-var seconds;
 var timerRunning = false;
 var myTimer;
 var minutes;
@@ -9,8 +8,8 @@ var session = "SESSION";
 var timer;
 var previousSession;
 var beepNoise = document.getElementById("beep");
-var defaultSession = 25 * 60 * 1000;
-var defaultBreak = 5 * 60 * 1000;
+var defaultSession = 25 * 60 * 1000; //defaults "SESSION" duration to 25 minutes
+var defaultBreak = 5 * 60 * 1000; //defaults "BREAK" duration to 5 minutes
 
 Number.prototype.pad = function(size) {
     var s = String(this);
@@ -21,86 +20,86 @@ Number.prototype.pad = function(size) {
 function buttonPress(action) {
   switch (action) {
     case "BREAKDECREASE":
-      if (!timerRunning){
-        breakLength-=60000;
+      if (!timerRunning){ //if timer is running dont do anything
+        breakLength-=60000; //decrease the "BREAK" duration by 1 minute
         if (breakLength/60000 <= 0){
-          breakLength = 60000;
+          breakLength = 60000; //"BREAK" duration must be > 0
         }
-        updateDOM("BREAK");
+        updateDOM("BREAK"); //update the DOM for "BREAK"
       }
       break;
     case "BREAKINCREASE":
-      if (!timerRunning){
-        breakLength+=60000;
+      if (!timerRunning){ //if timer is running dont do anything
+        breakLength+=60000;  //increase the "BREAK" duration by 1 minute
         if (breakLength > 60000*60){
-          breakLength = 60*60000;
+          breakLength = 60*60000; //"BREAK" duration must be <= 60
         }
-        updateDOM("BREAK");
+        updateDOM("BREAK"); //update the DOM for "BREAK"
       }
       break;
     case "SESSIONDECREASE":
-      if (!timerRunning){
-        sessionLength -= 60000;
+      if (!timerRunning){ //if timer is running dont do anything
+        sessionLength -= 60000; //decreae the "SESSION" duration by 1 minute
         if (sessionLength <= 0){
-          sessionLength = 60000;
+          sessionLength = 60000; //"SESSION" duration must be > 0
         }
 
-        if (previousSession==="SESSION") {
+        if (previousSession==="SESSION") { //if user increases time during timer pause then specialy code to correct display
           timer=sessionLength;
           seconds="00";
         }
 
-        updateDOM("SESSION");
+        updateDOM("SESSION"); //Update the DOM for "SESSION"
       }
       break;
     case "SESSIONINCREASE":
-      if (!timerRunning){
-        sessionLength+=60000;
+      if (!timerRunning){ //if timer is running dont do anything
+        sessionLength+=60000; //increase the "SESSION" duration by 1 minute
         if (sessionLength > 60*60000){
-          sessionLength = 60*60000;
+          sessionLength = 60*60000; //"SESSION" duration must be <= 60
         }
 
-        if (previousSession==="SESSION") {
+        if (previousSession==="SESSION") { //if user increases time during timer pause then specialy code to correct display
           seconds="00";
           timer=sessionLength;
         }
 
-        updateDOM("SESSION");;
+        updateDOM("SESSION");; // Update the DOM for "SESSION"
       }
       break;
-    case "RESET":
+    case "RESET": // user clicks RESET button
       resetTimer();
       break;
-    case "STARTSTOP":
+    case "STARTSTOP": //user clicks START/STOP button
       if (timerRunning){
-        stopTimer();
+        stopTimer(); // if the timer is running stop it
       } else {
         if (session==="SESSION") {
-          startTimer(sessionLength);
+          startTimer(sessionLength); //start timer with SESSION duration
         } else if (timerRunning === "BREAK") {
-          startTimer(breakLength);
+          startTimer(breakLength); //start timer with BREAK duration
         } else {
-          startTimer(timer);
+          startTimer(timer); // restart during pause - start from TIMER (ie where we paused)
         }
       }
   }
 }
 
 function stopTimer(timerValue){
-  clearInterval(myTimer);
-  console.log(timer);
-  previousSession = session;
-  session = "PAUSED";
-  timerRunning = false;
-  document.getElementById("timer-label").innerHTML = "Paused";
+  clearInterval(myTimer); //stop the timer
+
+  previousSession = session;//note the duration we were tunning (ie SESSION or BREAK)
+  session = "PAUSED"; //note timer is now paused
+  timerRunning = false; //timer stopped
+  document.getElementById("timer-label").innerHTML = "Paused"; //update screen to show pause
 }
 
 function startTimer(timerValue){
-  session = previousSession;
-  timer = timerValue;
-  timerRunning = true;
+  session = previousSession; //go back to where we were before the pause
+  timer = timerValue; //reset the timer to the right value
+  timerRunning = true; //note the timer is running
 
-  if (session==="SESSION") {
+  if (session==="SESSION") { //set the correct desicription for the timer
     document.getElementById("timer-label").innerHTML = "Working";
   } else {
     document.getElementById("timer-label").innerHTML = "On a Break";
@@ -119,14 +118,16 @@ function startTimer(timerValue){
   // If the count down is finished, move on to next timer
   if (timer === 0) {
     beepNoise.play();
-    console.log(session);
+
     clearInterval(myTimer);
+
+    // move to next timer & trigger counter
     if (session==="BREAK") {
       previousSession = "SESSION";
-      startTimer((sessionLength ) + 60000/60);
+      startTimer(sessionLength+1000);
     } else {
       previousSession = "BREAK";
-      startTimer((breakLength) + 60000/60);
+      startTimer(breakLength+1000);
     }
   }
 }, 1000);
@@ -139,6 +140,8 @@ function resetTimer() {
   beepNoise.pause();
   beepNoise.currentTime = 0;
   document.getElementById("timer-label").innerHTML = "Not Running";
+
+  //set all default values;
   session = "SESSION";
   previousSession = session;
   sessionLength = defaultSession;
@@ -153,7 +156,7 @@ function updateDOM(domID) {
     case "SESSION":
       minutes = Math.floor((sessionLength % (1000 * 60 * 60)) / (1000 * 60));
       if (minutes===0){
-        minutes=60;
+        minutes=60; //60 * 60000 (ie 1 hour) derives to 1 hour 0 minutes in above so need to make it 60
       }
       document.getElementById("session-length").innerHTML = minutes;
       document.getElementById("time-left").innerHTML = minutes + ":" + seconds;
@@ -161,7 +164,7 @@ function updateDOM(domID) {
     case "BREAK":
       minutes = Math.floor((breakLength % (1000 * 60 * 60)) / (1000 * 60));
       if (minutes===0){
-        minutes=60;
+        minutes=60; //60 * 60000 (ie 1 hour) derives to 1 hour 0 minutes in above so need to make it 60
       }
       document.getElementById("break-length").innerHTML = minutes;
       break;
