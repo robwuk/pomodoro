@@ -2,12 +2,14 @@ var sessionLength;
 var breakLength;
 var seconds;
 var timerRunning = false;
-var distance;
 var myTimer;
 var minutes;
 var seconds;
-var session = true;
+var session = "SESSION";
 var timer;
+var previousSession;
+var beepNoise = document.getElementById("beep");
+
 
 Number.prototype.pad = function(size) {
     var s = String(this);
@@ -18,32 +20,52 @@ Number.prototype.pad = function(size) {
 function buttonPress(action) {
   switch (action) {
     case "BREAKDECREASE":
-      breakLength--;
-      if (breakLength < 0){
-        breakLength = 0;
+      if (!timerRunning){
+        breakLength--;
+        if (breakLength <= 0){
+          breakLength = 1;
+        }
+        updateDOM("BREAK");
       }
-      updateDOM("BREAK");
       break;
     case "BREAKINCREASE":
-      breakLength++;
-      if (breakLength > 60){
-        breakLength = 60;
+      if (!timerRunning){
+        breakLength++;
+        if (breakLength > 60){
+          breakLength = 60;
+        }
+        updateDOM("BREAK");
       }
-      updateDOM("BREAK");
       break;
     case "SESSIONDECREASE":
-      sessionLength--;
-      if (sessionLength < 0){
-        sessionLength = 0;
+      if (!timerRunning){
+        sessionLength--;
+        if (sessionLength <= 0){
+          sessionLength = 1;
+        }
+
+        if (previousSession==="SESSION") {
+          timer=sessionLength * 60000;
+          seconds="00";
+        }
+
+        updateDOM("SESSION");
       }
-      updateDOM("SESSION");
       break;
     case "SESSIONINCREASE":
-      sessionLength++;
-      if (sessionLength > 60){
-        sessionLength = 60;
+      if (!timerRunning){
+        sessionLength++;
+        if (sessionLength > 60){
+          sessionLength = 60;
+        }
+
+        if (previousSession==="SESSION") {
+          seconds="00";
+          timer=sessionLength * 60000;
+        }
+
+        updateDOM("SESSION");;
       }
-      updateDOM("SESSION");;
       break;
     case "RESET":
       resetTimer();
@@ -52,58 +74,72 @@ function buttonPress(action) {
       if (timerRunning){
         stopTimer();
       } else {
-        if (session) {
-          startTimer(sessionLength);
+        if (session==="SESSION") {
+          startTimer(sessionLength * 60000);
+        } else if (timerRunning === "BREAK") {
+          startTimer(breakLength * 60000);
         } else {
-          startTimer(breakLength);
+          startTimer(timer);
         }
       }
-
-
   }
-  console.log(action);
 }
 
 function stopTimer(timerValue){
-  timerRunning = false;
-  if (session) {
-    sessionLength = minutes + (seconds/60);
-  } else {
-    breakLength = minutes + (seconds/60);
-  }
   clearInterval(myTimer);
+  console.log(timer);
+  previousSession = session;
+  session = "PAUSED";
+  timerRunning = false;
+  document.getElementById("timer-label").innerHTML = "Paused";
 }
 
 function startTimer(timerValue){
+  session = previousSession;
   timer = timerValue;
   timerRunning = true;
-  var startTime = new Date().getTime();
-  var endTime = new Date(startTime + timer*60000);
 
+  if (session==="SESSION") {
+    document.getElementById("timer-label").innerHTML = "Working";
+  } else {
+    document.getElementById("timer-label").innerHTML = "On a Break";
+  }
   myTimer = setInterval(function() {
+  //decrease timer by 1s
+  timer -= (60000/60);
 
-  // Get todays date and time
-  // Get todays date and time
-  var now = new Date().getTime();
+  // Time calculations for minutes and seconds
+  minutes = Math.floor((timer % (1000 * 60 * 60)) / (1000 * 60));
+  seconds = Math.floor((timer % (1000 * 60)) / 1000);
 
-  // Find the distance between now and the count down date
-  distance = endTime - now;
-
-  // Time calculations for days, hours, minutes and seconds
-  minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Display the result in the element with id="demo"
+  // Display the result in the element with id="time-left"
   document.getElementById("time-left").innerHTML =  minutes.pad(2) + ":" + seconds.pad(2);
 
-  // If the count down is finished, write some text
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("timer-label").innerHTML = "EXPIRED";
+  // If the count down is finished, move on to next timer
+  if (timer === 0) {
+    beepNoise.play();
+    console.log(session);
+    clearInterval(myTimer);
+    if (session==="BREAK") {
+      previousSession = "SESSION";
+      startTimer((sessionLength * 60000) + 60000/60);
+    } else {
+      previousSession = "BREAK";
+      startTimer((breakLength * 60000) + 60000/60);
+    }
   }
 }, 1000);
 }
+
 function resetTimer() {
+  if (timerRunning){
+    stopTimer();
+  }
+  beepNoise.pause();
+  beepNoise.currentTime = 0;
+  document.getElementById("timer-label").innerHTML = "Not Running";
+  session = "SESSION";
+  previousSession = session;
   sessionLength = "25";
   breakLength = "5";
   seconds="00";

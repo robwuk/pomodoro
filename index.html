@@ -22,6 +22,11 @@
     <script src="FCC_Test_Script.js"></script>
 
     <div id="fcc_test_suite_wrapper" style="position: relative !important; z-index: 99999 !important;"></div>
+
+    <audio id="beep">
+      <source src="clock-tick9.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="screen">
       <div id="pomodoro" class="container">
         <div id="pomodoro__title" class="row">
@@ -56,7 +61,7 @@
         </div>
         <div id="pomodoro__clock" class="row">
           <div class="col-md-12">
-            <div id="timer-label" class="subtitle">Session Running</div>
+            <div id="timer-label" class="subtitle"></div>
           </div>
           <div class="col-md-12">
             <div id="time-left" class="timer"></div>
@@ -70,6 +75,7 @@
         </div>
       </div>
     </div>
+
     <script src="FCC_Pomo.js"></script>
   </body>
 </html>
