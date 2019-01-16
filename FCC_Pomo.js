@@ -159,7 +159,7 @@ function updateDOM(domID) {
         minutes=60; //60 * 60000 (ie 1 hour) derives to 1 hour 0 minutes in above so need to make it 60
       }
       document.getElementById("session-length").innerHTML = minutes;
-      document.getElementById("time-left").innerHTML = minutes + ":" + seconds;
+      document.getElementById("time-left").innerHTML = minutes.pad(2) + ":" + seconds;
       break;
     case "BREAK":
       minutes = Math.floor((breakLength % (1000 * 60 * 60)) / (1000 * 60));
